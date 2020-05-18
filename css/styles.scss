@@ -6,14 +6,14 @@
 a,
 a:focus,
 a:hover {
-  color: #fff;
+  color: gray;
 }
 
 /* Custom default button */
 .btn-secondary,
 .btn-secondary:hover,
 .btn-secondary:focus {
-  color: #333;
+  color: #300;
   text-shadow: none; /* Prevent inheritance from `body` */
   background-color: #fff;
   border: .05rem solid #fff;
@@ -27,13 +27,13 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #333;
+  background-color: #123;
 }
 
 body {
   display: -ms-flexbox;
   display: flex;
-  color: #fff;
+  color: yellow;
   text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
   box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
 }
