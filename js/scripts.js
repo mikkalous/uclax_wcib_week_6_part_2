@@ -1,76 +1,52 @@
-console.log('Hello from js/scripts.js!');
+const customName = document.getElementById('customname');
+const randomize = document.querySelector('.randomize');
+const story = document.querySelector('.story');
 
-let randomNumber = Math.floor(Math.random() * 100) + 1;
-
-const guesses = document.querySelector('.guesses');
-const lastResult = document.querySelector('.lastResult');
-const lowOrHi = document.querySelector('.lowOrHi');
-
-const guessSubmit = document.querySelector('.guessSubmit');
-const guessField = document.querySelector('.guessField');
-
-let guessCount = 1;
-let resetButton;
-
-
-
-function checkGuess() {
-  let userGuess = Number(guessField.value);
-  if (guessCount === 1) {
-    guesses.textContent = 'Previous guesses: ';
-  }
-  guesses.textContent += userGuess + ' ';
-
-  if (userGuess === randomNumber) {
-    lastResult.textContent = 'Congratulations! You got it right!';
-    lastResult.style.backgroundColor = 'green';
-    lowOrHi.textContent = '';
-    setGameOver();
-  } else if (guessCount === 10) {
-    lastResult.textContent = '!!!GAME OVER!!!';
-    setGameOver();
-  } else {
-    lastResult.textContent = 'Wrong!';
-    lastResult.style.backgroundColor = 'red';
-    if(userGuess < randomNumber) {
-      lowOrHi.textContent = 'Last guess was too low!';
-    } else if(userGuess > randomNumber) {
-      lowOrHi.textContent = 'Last guess was too high!';
-    }
-  }
-
-  guessCount++;
-  guessField.value = '';
-  guessField.focus();
+function randomValueFromArray(array){
+  const random = Math.floor(Math.random()*array.length);
+  return array[random];
 }
 
-  guessSubmit.addEventListener('click', checkGuess);
+let storyText = 'It was 94 fahrenheit outside, so :insertx: went for a walk. When they got to :inserty:, they stared in horror for a few moments, then :insertz:. Bob saw the whole thing, but was not surprised — :insertx: weighs 300 pounds, and it was a hot day.';
 
-function setGameOver() {
-  guessField.disabled = true;
-  guessSubmit.disabled = true;
-  resetButton = document.createElement('button');
-  resetButton.textContent = 'Start new game';
-  document.body.append(resetButton);
-  resetButton.addEventListener('click', resetGame);
-}
+let insertX = ['Willy the Goblin',
+'Big Daddy',
+'Father Christmas'];
 
-function resetGame() {
-  guessCount = 1;
+let insertY = ['the soup kitchen',
+'Disneyland',
+'the White House'];
 
-  const resetParas = document.querySelectorAll('.resultParas p');
-  for (let i = 0 ; i < resetParas.length ; i++) {
-    resetParas[i].textContent = '';
+let insertZ = ['spontaneously combusted',
+'melted into a puddle on the sidewalk',
+'turned into a slug and crawled away'];
+
+randomize.addEventListener('click', result);
+
+function result() {
+  let newStory = storyText;
+  let xItem = randomValueFromArray(insertX);
+  let yItem = randomValueFromArray(insertY);
+  let zItem = randomValueFromArray(insertZ);
+
+  newStory = newStory.replace(':insertx:',xItem);
+  newStory = newStory.replace(':insertx:',xItem);
+  newStory = newStory.replace(':inserty:',yItem);
+  newStory = newStory.replace(':insertz:',zItem);
+
+  if(customName.value !== '') {
+    let name = customName.value;
+    newStory = newStory.replace('Bob',name);
   }
 
-  resetButton.parentNode.removeChild(resetButton);
+  if(document.getElementById("uk").checked) {
+    let weight = Math.round(300)*0.0714286+' stone';
+    let temperature = ((Math.round(94)-32)*(5/9))+' centigrade';
+    newStory = newStory.replace('300 pounds',weight);
+    temperature = newStory.replace('94 fahrenheit',temperature);
 
-  guessField.disabled = false;
-  guessSubmit.disabled = false;
-  guessField.value = '';
-  guessField.focus();
+  }
 
-  lastResult.style.backgroundColor = 'white';
-
-  randomNumber = Math.floor(Math.random() * 100) + 1;
+  story.textContent = newStory;
+  story.style.visibility = 'visible';
 }
